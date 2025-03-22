@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Patient from './Patient';
 const Schema = mongoose.Schema;
 
 // --- Sub-schemas ---
@@ -16,7 +17,7 @@ const IdentifierSchema = new Schema({
     },
     system: String,
     value: String,
-    period: Schema.Types.Mixed, // Can define a PeriodSchema if needed
+    period: Schema.Types.Mixed, 
     assigner: Schema.Types.Mixed // e.g., Reference to an Organization
     }, { _id: false }
 );
@@ -101,7 +102,7 @@ const resourceSchema=new Schema({
     // DiagnosticReport-specific fields
     identifier: [IdentifierSchema],
     basedOn: [ReferenceSchema],
-    status: { type: String, required: true }, // e.g., registered, preliminary, final, etc.
+    status: { type: String, default: 'unknwon' , requried:true }, // e.g., registered, preliminary, final, etc.
     category: [CodeableConceptSchema],
     code: CodeableConceptSchema,
     subject: ReferenceSchema,
@@ -127,7 +128,10 @@ const resourceSchema=new Schema({
 )
 
 const metaDataSchema=new Schema({
-
+    paitentID: {
+        ref:'Patient',
+        type:Schema.Types.ObjectId,
+    }
 })
 
 
@@ -141,4 +145,6 @@ const DiagnosticReportSchema = new Schema({
 });
 
 // Export the model
-module.exports = mongoose.model('DiagnosticReport', DiagnosticReportSchema);
+// module.exports = mongoose.model('DiagnosticReport', DiagnosticReportSchema);
+const DiagnosticReport=mongoose.model('DiagnosticReport', DiagnosticReportSchema);
+export default DiagnosticReport;

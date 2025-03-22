@@ -206,7 +206,10 @@ const resourceSchema=new Schema({
 )
 
 const metaDataSchema=new Schema({
-
+  paitentID: {
+    ref:'Patient',
+    type:Schema.Types.ObjectId,
+}
 })
 const ObservationSchema = new Schema({
     metaData: metaDataSchema,
